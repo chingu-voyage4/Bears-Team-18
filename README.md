@@ -17,4 +17,5 @@ Voyage-4
 
 ### React
 
+* [Official React Tutorial](https://reactjs.org/tutorial/tutorial.html)
 * [Thinking in React](https://reactjs.org/docs/thinking-in-react.html)
