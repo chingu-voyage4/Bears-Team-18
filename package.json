@@ -12,6 +12,8 @@
     "@zeit/next-typescript": "^0.0.10",
     "nodemon": "^1.15.1",
     "ts-node": "^5.0.0",
+    "tslint": "^5.9.1",
+    "tslint-react": "^3.5.1",
     "typescript": "^2.7.2"
   },
   "scripts": {
