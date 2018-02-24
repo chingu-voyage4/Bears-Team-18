@@ -12,6 +12,9 @@
 # nextJS folder
 /.next
 
+# VSCode folder
+/.vscode
+
 # misc
 .DS_Store
 .env.local
