@@ -9,6 +9,9 @@
 # production
 /build
 
+# nextJS folder
+/.next
+
 # misc
 .DS_Store
 .env.local
