@@ -6,9 +6,17 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
+  "devDependencies": {
+    "@types/next": "^2.4.8",
+    "@types/react": "^16.0.38",
+    "@zeit/next-typescript": "^0.0.10",
+    "nodemon": "^1.15.1",
+    "ts-node": "^5.0.0",
+    "typescript": "^2.7.2"
+  },
   "scripts": {
-    "dev": "next",
-    "build": "next build",
-    "start": "next start"
+    "dev": "nodemon server/index.ts",
+    "build": "next build && tsc --module commonjs",
+    "start": "NODE_ENV=production node build/index.js"
   }
 }
