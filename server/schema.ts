@@ -7,6 +7,7 @@ const typeDefs = `
     categories: [Category]
     exercises(category: Int!) : [Exercise]
     exercise(id: Int!) : Exercise
+    exerciseimage(id: Int!) : [ExerciseImage]
   }
 
   type Category {
@@ -30,6 +31,16 @@ const typeDefs = `
     muscles_secondary: [Int]
     equipment: [Int]
   }
+
+  type ExerciseImage {
+    id: Int!
+    license_author: String
+    status: String
+    image: String
+    is_main: Boolean
+    license: Int
+    exercise: Int!
+  }
 `;
 
 // Resolvers
@@ -42,6 +53,11 @@ const resolvers = {
     },
     exercise: (_, { id }) => {
       return fetch(`https://wger.de/api/v2/exercise/${id}`).then(r => r.json());
+    },
+    exerciseimage: (_, { id }) => {
+      return fetch(`https://wger.de/api/v2/exerciseimage?exercise=${id}`)
+        .then(r => r.json())
+        .then(data => data.results);
     },
     exercises: (_, { category }) => {
       return fetch(
