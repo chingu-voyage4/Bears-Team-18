@@ -30,7 +30,7 @@ jobs:
 
       # run tests!
       - run:
-          name: Run tests
+          name: Test Coverage
           command: yarn test:cov
 
       - run: 
