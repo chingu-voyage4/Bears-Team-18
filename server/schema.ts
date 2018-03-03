@@ -30,6 +30,7 @@ const typeDefs = `
     muscles: [Int]
     muscles_secondary: [Int]
     equipment: [Int]
+    image: [ExerciseImage]
   }
 
   type ExerciseImage {
@@ -53,18 +54,17 @@ const resolvers = {
       return data.results;
     },
     exercise: async (_, { id }) => {
-      const r = await fetch(`https://wger.de/api/v2/exercise/${id}`);
-      const data = await r.json();
-
-      return data;
-    },
-    exerciseimage: async (_, { id }) => {
-      const r = await fetch(
+      const info = fetch(`https://wger.de/api/v2/exercise/${id}`);
+      const image = fetch(
         `https://wger.de/api/v2/exerciseimage?exercise=${id}`,
       );
-      const data = await r.json();
+      const [rInfo, rImage] = [await info, await image];
+      const [dataInfo, dataImage] = [await rInfo.json(), await rImage.json()];
 
-      return data.results;
+      return {
+        ...dataInfo,
+        image: dataImage.results,
+      };
     },
     exercises: async (_, { category }) => {
       const r = await fetch(
