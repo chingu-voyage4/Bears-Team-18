@@ -46,25 +46,33 @@ const typeDefs = `
 // Resolvers
 const resolvers = {
   Query: {
-    categories: () => {
-      return fetch("https://wger.de/api/v2/exercisecategory")
-        .then(r => r.json())
-        .then(data => data.results);
+    categories: async () => {
+      const r = await fetch("https://wger.de/api/v2/exercisecategory");
+      const data = await r.json();
+
+      return data.results;
     },
-    exercise: (_, { id }) => {
-      return fetch(`https://wger.de/api/v2/exercise/${id}`).then(r => r.json());
+    exercise: async (_, { id }) => {
+      const r = await fetch(`https://wger.de/api/v2/exercise/${id}`);
+      const data = await r.json();
+
+      return data;
     },
-    exerciseimage: (_, { id }) => {
-      return fetch(`https://wger.de/api/v2/exerciseimage?exercise=${id}`)
-        .then(r => r.json())
-        .then(data => data.results);
+    exerciseimage: async (_, { id }) => {
+      const r = await fetch(
+        `https://wger.de/api/v2/exerciseimage?exercise=${id}`,
+      );
+      const data = await r.json();
+
+      return data.results;
     },
-    exercises: (_, { category }) => {
-      return fetch(
+    exercises: async (_, { category }) => {
+      const r = await fetch(
         `https://wger.de/api/v2/exercise/?category=${category}&language=2&equipment=7`,
-      )
-        .then(r => r.json())
-        .then(data => data.results);
+      );
+      const data = await r.json();
+
+      return data.results;
     },
   },
 };
