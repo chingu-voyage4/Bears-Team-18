@@ -86,6 +86,7 @@ jobs:
           command: |
             now-realias
             now rm-t${NOW_TOKEN} $(now-no-alias | jq -r '[] | .uid') -y
+            
 
 workflows:
   version: 2
