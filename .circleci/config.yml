@@ -28,15 +28,14 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-  test-job:
-    machine:
-      enabled: true
-    working_directory: ~/repo
-    steps:
       # run tests!
-      - run: yarn test:cov
-      - run: yarn build
+      - run:
+          name: Run tests
+          command: yarn test:cov
 
+      - run: 
+          name: Run build
+          command: yarn build
   deploy-job: 
     machine:
         enabled: true
@@ -63,12 +62,9 @@ workflows:
   deploy:
       jobs: 
         - build-job
-        - test-job:
-            requires:
-              - build-job
         - deploy-job:
             requires: 
-              - test-job
+              - build-job
             filters:
               branches:
                 only: setup/initial-setup
