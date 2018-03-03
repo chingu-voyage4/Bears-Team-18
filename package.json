@@ -37,7 +37,8 @@
     "precommit": "lint-staged",
     "dev": "nodemon server/index.ts",
     "build": "next build && tsc --module commonjs",
-    "start": "NODE_ENV=production node build/index.js"
+    "start": "NODE_ENV=production node build/index.js",
+    "test": "jest"
   },
   "lint-staged": {
     "*.{js,json,css,md}": ["prettier --write", "git add"],
