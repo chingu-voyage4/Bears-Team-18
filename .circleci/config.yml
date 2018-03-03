@@ -37,10 +37,9 @@ jobs:
           command: yarn test
 
   coverage-job:
-      docker:
+    docker:
       # specify the version you desire here
       - image: circleci/node:8.9.4
-      
     working_directory: ~/repo
     steps:
       - checkout
@@ -58,6 +57,7 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+
       - run:
         name: Test Coverage
         command: yarn test:cov
