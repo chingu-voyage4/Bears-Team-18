@@ -30,8 +30,8 @@ jobs:
 
   test-job:
     working_directory: ~/repo
-
-    # run tests!
+    steps:
+      # run tests!
       - run: yarn test:cov
       - run: yarn build
 
