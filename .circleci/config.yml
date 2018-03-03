@@ -40,7 +40,9 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/node:8.9.4
+
     working_directory: ~/repo
+
     steps:
       - checkout
 
@@ -59,13 +61,15 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       - run:
-        name: Test Coverage
-        command: yarn test:cov
+          name: Test Coverage
+          command: yarn test:cov
 
   deploy-job: 
     machine:
         enabled: true
+
     working_directory: ~/repo
+    
     steps: 
       - run: 
           name: Install deploy dependencies
