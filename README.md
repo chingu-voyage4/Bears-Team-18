@@ -1,5 +1,6 @@
-[![codebeat badge](https://codebeat.co/badges/3f9a7060-9573-4ba4-9c2f-3374b47f8509)](https://codebeat.co/projects/github-com-chingu-voyage4-bears-team-18-develop)
+[![Codebeat](https://codebeat.co/badges/3f9a7060-9573-4ba4-9c2f-3374b47f8509)](https://codebeat.co/projects/github-com-chingu-voyage4-bears-team-18-develop)
 [![CircleCI](https://circleci.com/gh/chingu-voyage4/Bears-Team-18.svg?style=svg)](https://circleci.com/gh/chingu-voyage4/Bears-Team-18)
+[![Codecov](https://codecov.io/gh/chingu-voyage4/Bears-Team-18/branch/develop/graph/badge.svg)](https://codecov.io/gh/chingu-voyage4/Bears-Team-18)
 
 # Bears-Team-18
 
