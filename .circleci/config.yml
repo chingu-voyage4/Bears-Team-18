@@ -68,15 +68,9 @@ jobs:
 
       - run:
           name: Test Coverage
-          command: yarn test:cov
+          command: yarn test --runInBand --ci --coverage
 
-
-      - store_test_results:
-        path: /coverage
-
-      - store_artifacts:
-        path: /coverage
-
+      - run: curl -s https://codecov.io/bash
 
   deploy-job: 
     machine:
