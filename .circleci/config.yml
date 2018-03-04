@@ -70,7 +70,8 @@ jobs:
           name: Test Coverage
           command: yarn test --runInBand --ci --coverage
 
-      - run: curl -s https://codecov.io/bash
+      - run: bash <(curl -s https://codecov.io/bash)
+
 
   deploy-job: 
     machine:
