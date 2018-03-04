@@ -16,16 +16,24 @@
     "next": "^5.0.0",
     "react": "^16.2.0",
     "react-apollo": "^2.0.4",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "styled-components": "^3.1.6"
   },
   "devDependencies": {
+    "@types/enzyme": "^3.1.9",
+    "@types/jest": "^22.1.4",
     "@types/next": "^2.4.8",
-    "@types/react": "^16.0.38",
+    "@types/react": "^16.0.40",
     "@zeit/next-typescript": "^0.0.10",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "husky": "^0.14.3",
+    "jest": "^22.4.2",
+    "jest-junit": "^3.6.0",
     "lint-staged": "^7.0.0",
     "nodemon": "^1.15.1",
     "prettier": "^1.10.2",
+    "ts-jest": "^22.4.1",
     "ts-node": "^5.0.0",
     "tslint": "^5.9.1",
     "tslint-react": "^3.5.1",
@@ -35,7 +43,9 @@
     "precommit": "lint-staged",
     "dev": "nodemon server/index.ts",
     "build": "next build && tsc --module commonjs",
-    "start": "NODE_ENV=production node build/index.js"
+    "start": "NODE_ENV=production node build/index.js",
+    "test": "jest",
+    "test:cov": "yarn test --coverage"
   },
   "lint-staged": {
     "*.{js,json,css,md}": ["prettier --write", "git add"],
@@ -44,5 +54,23 @@
       "tslint --fix",
       "git add"
     ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "**/server/**/*.{tsx|ts|jsx|js}",
+      "**/pages/**/*.{tsx|ts|jsx|js}",
+      "**/components/**/*.{tsx|ts|jsx|js}"
+    ],
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "tsconfig.jest.json"
+      }
+    },
+    "moduleFileExtensions": ["js", "jsx", "json", "ts", "tsx"],
+    "setupTestFrameworkScriptFile": "<rootDir>__tests__/setupTests.js",
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    }
   }
 }
