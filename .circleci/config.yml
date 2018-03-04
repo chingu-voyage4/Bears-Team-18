@@ -80,6 +80,8 @@ jobs:
     working_directory: ~/repo
     
     steps: 
+      - checkout
+
       - run: 
           name: Deploy to Now
           command: npx now --token ${NOW_TOKEN} --team 'chingu-bears-18' --public
@@ -99,6 +101,8 @@ jobs:
     working_directory: ~/repo
 
     steps: 
+      - checkout
+
       - run: 
           name: Deploy to Now
           command: npx now --token ${NOW_TOKEN} --team 'chingu-bears-18' --public
