@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  build-job:
+  build:
     docker:
       # specify the version you desire here
       - image: circleci/node:9.5.0
@@ -32,18 +32,7 @@ jobs:
           name: Run build
           command: yarn build
 
-      - run: 
-          name: Run Testing Suite
-          environment:
-            JEST_JUNIT_OUTPUT: reports/junit/js-test-results.xml
-          command: yarn test --runInBand --ci --testResultsProcessor="jest-junit"
-
-      - store_test_results:
-          path: reports/junit
-      - store_artifacts:
-          path: reports/junit
-
-  coverage-job:
+  test:
     docker:
       - image: circleci/node:9.5.0
 
@@ -67,13 +56,14 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       - run:
-          name: Test Coverage
+          name: Run testing suite
           command: yarn test --runInBand --ci --coverage
 
-      - run: bash <(curl -s https://codecov.io/bash)
-
-
-  deploy-master-job: 
+      - run:
+        name: Send coverage to CodeCov
+        command: bash <(curl -s https://codecov.io/bash)
+    
+  deploy-master: 
     docker:
       - image: circleci/node:9.5.0
 
@@ -94,7 +84,7 @@ jobs:
           name: Cleanup older instance
           command: npx now-purge --token ${NOW_TOKEN} --team 'chingu-bears-18'
 
-  deploy-dev-job:    
+  deploy-dev:    
     docker:
       - image: circleci/node:9.5.0
 
@@ -119,19 +109,19 @@ workflows:
   version: 2
   build-test-deploy:
       jobs: 
-        - build-job
-        - coverage-job:
+        - build
+        - test:
             requires: 
-              - build-job
-        - deploy-dev-job:
+              - build
+        - deploy-dev:
             requires: 
-              - coverage-job
+              - test
             filters:
               branches:
                 only: develop
-        - deploy-master-job:
+        - deploy-master:
             requires: 
-              - coverage-job
+              - test
             filters:
               branches:
                 only: master
