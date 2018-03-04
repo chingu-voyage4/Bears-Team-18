@@ -73,38 +73,59 @@ jobs:
       - run: bash <(curl -s https://codecov.io/bash)
 
 
-  deploy-job: 
-    machine:
-        enabled: true
+  deploy-master-job: 
+    docker:
+      - image: circleci/node:9.5.0
 
     working_directory: ~/repo
     
     steps: 
       - run: 
-          name: Install deploy dependencies
-          command: |
-            sudo apt-get install jq
-            sudo yarn global add now now-realias now-no-alias
+          name: Deploy to Now
+          command: npx now --token ${NOW_TOKEN} --team 'chingu-bears-18' --public
 
       - run: 
-          name: Deploy to Now
-          command: now ${NOW_TOKEN} --public
-        
+          name: Set new deployment alias
+          command: npx now --token ${NOW_TOKEN} --team 'chingu-bears-18' alias 'bears-18-master'
+
       - run:
           name: Cleanup older instance
-          command: |
-            now-realias
-            now rm-t${NOW_TOKEN} $(now-no-alias | jq -r '[] | .uid') -y
+          command: npx now-purge --token ${NOW_TOKEN} --team 'chingu-bears-18'
+
+  deploy-dev-job:    
+    docker:
+      - image: circleci/node:9.5.0
+
+    working_directory: ~/repo
+
+    steps: 
+      - run: 
+          name: Deploy to Now
+          command: npx now --token ${NOW_TOKEN} --team 'chingu-bears-18' --public
+
+      - run: 
+          name: Set new deployment alias
+          command: npx now --token ${NOW_TOKEN} --team 'chingu-bears-18' alias 'bears-18-dev'
+
+      - run:
+          name: Cleanup older instance
+          command: npx now-purge --token ${NOW_TOKEN} --team 'chingu-bears-18'
 
 workflows:
   version: 2
-  deploy:
+  build-test-deploy:
       jobs: 
         - build-job
         - coverage-job:
             requires: 
               - build-job
-        - deploy-job:
+        - deploy-dev-job:
+            requires: 
+              - coverage-job
+            filters:
+              branches:
+                only: develop
+        - deploy-master-job:
             requires: 
               - coverage-job
             filters:
