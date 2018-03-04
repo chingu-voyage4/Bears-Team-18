@@ -7,7 +7,7 @@ jobs:
   build-job:
     docker:
       # specify the version you desire here
-      - image: circleci/node:8.9.4
+      - image: circleci/node:9.5.0
       
     working_directory: ~/repo
 
@@ -28,18 +28,24 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      # run tests!
       - run: 
           name: Run build
           command: yarn build
+
       - run: 
-          name: Run Unit Tests
-          command: yarn test
+          name: Run Testing Suite
+          environment:
+            JEST_JUNIT_OUTPUT: reports/junit/js-test-results.xml
+          command: yarn test --runInBand --ci --testResultsProcessor="jest-junit"
+
+      - store_test_results:
+          path: reports/junit
+      - store_artifacts:
+          path: reports/junit
 
   coverage-job:
     docker:
-      # specify the version you desire here
-      - image: circleci/node:8.9.4
+      - image: circleci/node:9.5.0
 
     working_directory: ~/repo
 
@@ -64,10 +70,13 @@ jobs:
           name: Test Coverage
           command: yarn test:cov
 
-      - post: bash <(curl -s https://codecov.io/bash)
 
       - store_test_results:
         path: /coverage
+
+      - store_artifacts:
+        path: /coverage
+
 
   deploy-job: 
     machine:
