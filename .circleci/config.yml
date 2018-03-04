@@ -63,6 +63,10 @@ jobs:
       - run:
           name: Test Coverage
           command: yarn test:cov
+      - post:
+        - bash <(curl -s https://codecov.io/bash)
+      - store_test_results:
+        path: /coverage
 
   deploy-job: 
     machine:

@@ -60,13 +60,6 @@
       "**/pages/**/*.{tsx|ts|jsx|js}",
       "**/components/**/*.{tsx|ts|jsx|js}"
     ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 70,
-        "functions": 70,
-        "lines": 70
-      }
-    },
     "globals": {
       "ts-jest": {
         "tsConfigFile": "tsconfig.jest.json"
