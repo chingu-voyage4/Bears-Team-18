@@ -86,7 +86,7 @@ jobs:
 
       - run: 
           name: Set new deployment alias
-          command: npx now --token ${NOW_TOKEN} --team 'chingu-bears-18' alias 'bears-18-master'
+          command: npx now --token ${NOW_TOKEN} --team 'chingu-bears-18' alias 'bears-18'
 
       - run:
           name: Cleanup older instance
