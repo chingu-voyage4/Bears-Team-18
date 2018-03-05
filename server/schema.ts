@@ -83,7 +83,7 @@ const resolvers = {
 };
 
 // Export schema
-module.exports = makeExecutableSchema({
+export default makeExecutableSchema({
   resolvers,
   typeDefs,
 });

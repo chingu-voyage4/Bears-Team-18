@@ -2,7 +2,7 @@ import { graphiqlExpress, graphqlExpress } from "apollo-server-express";
 import * as bodyParser from "body-parser";
 import * as express from "express";
 import * as next from "next";
-import * as schema from "./schema";
+import schema from "./schema";
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== "production";
