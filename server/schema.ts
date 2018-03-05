@@ -1,6 +1,12 @@
 import { makeExecutableSchema } from "graphql-tools";
 import * as fetch from "isomorphic-unfetch";
 
+// Helper method to fetch JSON
+const getJSON = async (url: string) => {
+  const res = await fetch(url);
+  return res.json();
+};
+
 // Types
 const typeDefs = `
   type Query {
@@ -48,18 +54,18 @@ const typeDefs = `
 const resolvers = {
   Query: {
     categories: async () => {
-      const r = await fetch("https://wger.de/api/v2/exercisecategory");
-      const data = await r.json();
+      const { results } = await getJSON(
+        "https://wger.de/api/v2/exercisecategory",
+      );
 
-      return data.results;
+      return results;
     },
     exercise: async (_, { id }) => {
-      const info = fetch(`https://wger.de/api/v2/exercise/${id}`);
-      const image = fetch(
+      const info = getJSON(`https://wger.de/api/v2/exercise/${id}`);
+      const image = getJSON(
         `https://wger.de/api/v2/exerciseimage?exercise=${id}`,
       );
-      const [rInfo, rImage] = [await info, await image];
-      const [dataInfo, dataImage] = [await rInfo.json(), await rImage.json()];
+      const [dataInfo, dataImage] = [await info, await image];
 
       return {
         ...dataInfo,
@@ -67,12 +73,11 @@ const resolvers = {
       };
     },
     exercises: async (_, { category }) => {
-      const r = await fetch(
+      const { results } = await getJSON(
         `https://wger.de/api/v2/exercise/?category=${category}&language=2&equipment=7`,
       );
-      const data = await r.json();
 
-      return data.results;
+      return results;
     },
   },
 };
