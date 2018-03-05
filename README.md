@@ -4,7 +4,11 @@
 
 # Bears-Team-18
 
-Voyage-4
+Deployments can be found under following urls:
+
+`master` branch: https://bears-18.now.sh
+
+`develop` branch: https://bears-18-dev.now.sh
 
 ## Application Stack
 
