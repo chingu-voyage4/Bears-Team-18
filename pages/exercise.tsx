@@ -2,6 +2,10 @@ import gql from "graphql-tag";
 import { graphql } from "react-apollo";
 import withData from "../lib/withData";
 
+import ExerciseInfo from "../components/ExerciseInfo";
+import ExerciseMedia from "../components/ExerciseMedia";
+import ExerciseTitle from "../components/ExerciseTitle";
+
 interface IExerciseProps {
   data: {
     loading: boolean;
@@ -10,6 +14,10 @@ interface IExerciseProps {
       id: number;
       name: string;
       description: string;
+      image: Array<{
+        id: number;
+        image: string;
+      }>;
     };
   };
 }
@@ -18,15 +26,24 @@ const Exercise: React.SFC<IExerciseProps> = ({
   data: { loading, error, exercise },
 }) => {
   if (error) return <p>An error occured</p>;
-  if (exercise)
-    return (
-      <div>
-        <h1>
-          #{exercise.id} - {exercise.name}
-        </h1>
-        <p>{exercise.description}</p>
+  if (exercise) {
+    return exercise.image ? (
+      <div className="container">
+        <ExerciseTitle name={exercise.name} />
+        <div className="row">
+          <ExerciseInfo info={exercise.description} />
+          <ExerciseMedia link={exercise.image[0].image} />
+        </div>
+      </div>
+    ) : (
+      <div className="container">
+        <ExerciseTitle name={exercise.name} />
+        <div className="row">
+          <ExerciseInfo info={exercise.description} />
+        </div>
       </div>
     );
+  }
 
   return <p>Loading</p>;
 };
@@ -37,6 +54,10 @@ const exerciseQuery = gql`
       id
       name
       description
+      image {
+        id
+        image
+      }
     }
   }
 `;
@@ -45,10 +66,10 @@ const exerciseQueryVars = {
   id: 100,
 };
 
-const ExerciseData = graphql<{}, {}, IExerciseProps>(exerciseQuery, {
-  options: {
-    variables: exerciseQueryVars,
-  },
-})(Exercise);
-
-export default withData(() => <ExerciseData />);
+export default withData(
+  graphql<{}, {}, IExerciseProps>(exerciseQuery, {
+    options: {
+      variables: exerciseQueryVars,
+    },
+  })(Exercise),
+);
